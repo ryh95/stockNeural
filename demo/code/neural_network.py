@@ -26,8 +26,8 @@ model.add(Activation('sigmoid')) #以sigmoid函数为激活函数
 #编译模型，损失函数为binary_crossentropy，用adam法求解
 model.compile(loss='binary_crossentropy',optimizer='rmsprop')
 
-model.fit(x_train, y_train, nb_epoch = 3000, batch_size = 1) #训练模型3000次
-model.save_weights('../tmp/net.model') #保存模型参数
+model.fit(x_train, y_train, nb_epoch = 1000, batch_size = 1) #训练模型3000次
+model.save_weights('../tmp/net.model',overwrite=True) #保存模型参数
 
 r = pd.DataFrame(model.predict_classes(x_test), columns = [u'预测结果'])
 pd.concat([data_test.iloc[:,:5], r], axis = 1).to_excel(testoutputfile)
