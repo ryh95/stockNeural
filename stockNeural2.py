@@ -2,6 +2,7 @@
 
 import pandas as pd
 from random import shuffle
+import csv
 
 datafile = 'input.xls'
 data = pd.read_excel(datafile)
@@ -34,6 +35,10 @@ predict_result = net.predict(test[:,1:29]).reshape(len(test)) #预测结果变�
 print predict_result
 print len(predict_result)
 
+csvfile = file('csvStrategy.csv','wb')
+writer = csv.writer(csvfile)
+writer.writerow(predict_result)
+csvfile.close()
 # from cm_plot import * #导入自行编写的混淆矩阵可视化函数
 # cm_plot(test[:,29], predict_result).show() #显示混淆矩阵可视化结果
 #
