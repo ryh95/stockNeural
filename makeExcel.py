@@ -5,7 +5,7 @@ import csv
 import pandas as pd
 
 import xlwt
-
+import math
 
 wb = xlwt.Workbook()
 ws = wb.add_sheet('InputSheet')  #命名sheet的名字
@@ -70,10 +70,13 @@ for line in reader2:
 
 results = [] #写入结果，涨1，跌0
 for i in range(399,len(prices)-1):
-    if float(prices[i+1])>float(prices[i]):
-        results.append(1)
-    else:
-        results.append(0)
+    # if float(prices[i+1])>float(prices[i]):
+    #     results.append(1)
+    # else:
+    #     results.append(0)
+    p = (float(prices[i+1])-float(prices[i]))/float(prices[i])
+    result = 1/(1+math.exp(-p*100))
+    results.append(result)
 
 for i in range(len(results)):
     ws.write(i+1,29,results[i])
