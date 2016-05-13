@@ -21,11 +21,16 @@ def strategy(filename):
     for i in range(len(list)):
         Rt = math.log(1/float(list[i])-1)/(-100)
         Pt = test[:,1][i]
-        Pt_next = Rt*Pt+Pt
+        if i == len(list)-1:
+            break
+        Pt_next = test[:, 1][i + 1]
+        Pt_predict = Rt*Pt+Pt
         # print Rt,Pt
-        if Pt_next>Pt+0.025:
-            sum = Pt_next-Pt+sum
-        elif Pt_next<Pt-0.025:
-            sum = Pt-Pt_next+sum
+        if Pt_predict > Pt + 2.5:
+            sum = Pt_next - Pt + sum
+            print i, Pt_next - Pt
+        elif Pt_predict < Pt - 2.5:
+            sum = Pt - Pt_next + sum
+            print i, Pt - Pt_next
     print sum
     csvfile.close()

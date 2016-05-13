@@ -31,13 +31,16 @@ def stockNeural(filename):
     net.add(Activation('sigmoid'))  # 输出层使用sigmoid激活函数
     net.compile(loss='binary_crossentropy', optimizer='adam')  # 编译模型，使用adam方法求解
 
-    net.fit(train[:, 1:29], train[:, 29], nb_epoch=100, batch_size=1)  # 训练模型，循环1000次
-    net.save_weights(netfile)  # 保存模型
+    if os.path.exists('neuralModels/50ETF/net.model'):
+        pass
+    else:
+        net.fit(train[:, 1:29], train[:, 29], nb_epoch=100, batch_size=1)  # 训练模型，循环1000次
+        net.save_weights(netfile)  # 保存模型
 
     predict_result = net.predict(test[:, 1:29]).reshape(len(test))  # 预测结果变形
     '''这里要提醒的是，keras用predict给出预测概率，predict_classes才是给出预测类别，而且两者的预测结果都是n x 1维数组，而不是通常的 1 x n'''
-    print predict_result
-    print len(predict_result)
+    # print predict_result
+    # print len(predict_result)
 
     if not os.path.exists('modelPredict/' + filename):
         os.mkdir('modelPredict/' + filename)
