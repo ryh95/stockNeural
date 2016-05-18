@@ -1,11 +1,10 @@
-import makeCSV
-import makeExcel
-import stockNeural2
-import strategy
+import produceIndicators
+from makeExcel import RSIExcel
+from binaryNeural import RSINeural,MANeural
+filename = '000905_close'
 
-filename = '50ETF1000'
-
-makeCSV.makeCSV(filename)
-makeExcel.makeExcel(filename)
-stockNeural2.stockNeural(filename)
-strategy.strategy(filename)
+# produceIndicators.getAllMAandRSI(filename)
+# RSIExcel.makeExcel(filename)
+RSINeural.stockNeural(filename)
+# # stockNeural2.stockNeural(filename)
+# strategy.strategy(filename)
