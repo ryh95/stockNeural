@@ -60,13 +60,13 @@ def makeExcel(filename):
     results = []  # 写入结果，涨1，跌0
     # 400-1
     for i in range(399, len(prices) - 1):
-        if float(prices[i+1])>float(prices[i]):
-            results.append(1)
-        else:
-            results.append(0)
-        # p = (float(prices[i + 1]) - float(prices[i])) / float(prices[i])
-        # result = 1 / (1 + math.exp(-p * 100))
-        # results.append(result)
+        # if float(prices[i+1])>float(prices[i]):
+        #     results.append(1)
+        # else:
+        #     results.append(0)
+        p = (float(prices[i + 1]) - float(prices[i])) / float(prices[i])
+        result = 1 / (1 + math.exp(-p * 100))
+        results.append(result)
 
     for i in range(len(results)):
         ws.write(i + 1, 29, results[i])

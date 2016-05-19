@@ -1,10 +1,11 @@
 import produceIndicators
+from strategy import strategyOne
 from makeExcel import RSIExcel
-from binaryNeural import RSINeural,MANeural
-filename = '000905_close'
+from realNeural import RSINeural
+filename = '50ETF'
 
 # produceIndicators.getAllMAandRSI(filename)
 # RSIExcel.makeExcel(filename)
-RSINeural.stockNeural(filename)
+# RSINeural.stockNeural(filename)
 # # stockNeural2.stockNeural(filename)
-# strategy.strategy(filename)
+strategyOne.strategy(filename)
