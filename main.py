@@ -4,11 +4,12 @@ from tools import excel
 from tools import indicators
 
 filename = '50ETF'
-indicator = ['MA','RSI']
+list_indicator = ['MA','RSI']
 type = 'binary'
+indicator = 'RSI'
 
-indicators.getIndicators(filename, *indicator)
-excel.makeExcel(filename, type=type, indicator='RSI')
-stockNeural.predict(filename,type=type,indicator='RSI')
+indicators.getIndicators(filename, *list_indicator)
+excel.makeExcel(filename, type=type, indicator=indicator)
+stockNeural.predict(filename,type=type,indicator=indicator)
 
-strategy.getProfit(filename,type=type,indicator='RSI')
+strategy.getProfit(filename,type=type,indicator=indicator)
