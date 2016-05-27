@@ -8,7 +8,7 @@ import pandas as pd
 import xlwt
 import math
 
-def makeExcel(filename):
+def makeExcel(filename,type,indicator):
     wb = xlwt.Workbook()
     ws = wb.add_sheet('InputSheet')  # 命名sheet的名字
 

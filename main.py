@@ -1,11 +1,14 @@
-import produceIndicators
-from strategy import strategyOne
+from binaryNeural import RSINeural
 from makeExcel import RSIExcel
-from realNeural import RSINeural
-filename = '50ETF'
+from strategy import strategybinary
+from tools import indicators
 
-# produceIndicators.getAllMAandRSI(filename)
-# RSIExcel.makeExcel(filename)
-# RSINeural.stockNeural(filename)
-# # stockNeural2.stockNeural(filename)
-strategyOne.strategy(filename)
+filename = '50ETF'
+indicator = ['MA','RSI']
+type = 'rsi'
+
+indicators.getIndicators(filename, *indicator)
+RSIExcel.makeExcel(filename)
+RSINeural.stockNeural(filename)
+# stockNeural2.stockNeural(filename)
+strategybinary.strategy(filename)
