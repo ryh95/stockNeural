@@ -1,14 +1,14 @@
-from binaryNeural import RSINeural
-from makeExcel import RSIExcel
-from strategy import strategybinary
+from neural import stockNeural
+from strategy import strategy
+from tools import excel
 from tools import indicators
 
 filename = '50ETF'
 indicator = ['MA','RSI']
-type = 'rsi'
+type = 'binary'
 
 indicators.getIndicators(filename, *indicator)
-RSIExcel.makeExcel(filename)
-RSINeural.stockNeural(filename)
-# stockNeural2.stockNeural(filename)
-strategybinary.strategy(filename)
+excel.makeExcel(filename, type=type, indicator='RSI')
+stockNeural.predict(filename,type=type,indicator='RSI')
+
+strategy.getProfit(filename,type=type,indicator='RSI')

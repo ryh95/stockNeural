@@ -33,30 +33,25 @@ def getIndicators(filename,*indicator):
         for item in indicator:
             if item == 'MA':
                 list_ma = talib.MA(np.array(float_data), timeperiod=day)
-                mergeMA = []
+                merge = []
                 for i in range(len(list_alldays)):
                     tmp = (list_alldays[i], list_ma[i])
-                    mergeMA.append(tmp)
+                    merge.append(tmp)
             if item == 'RSI':
                 list_rsi = talib.RSI(np.array(float_data), timeperiod=day)
-                mergeRSI = []
+                merge = []
                 for i in range(len(list_alldays)):
                     tmp = (list_alldays[i], list_rsi[i])
-                    mergeRSI.append(tmp)
+                    merge.append(tmp)
+
+            # 写入*.csv文件
+            if not os.path.exists(indicatorPath + filename + '/' + item):
+                os.mkdir(indicatorPath + filename + '/' + item)
+            with open(indicatorPath + filename + '/' + item + '/' + str(day) + item + '.csv', 'w') as f:
+                f_csv = csv.writer(f)
+                f_csv.writerows(merge)
 
 
 
-        # 写入*ma.csv文件
-        if not os.path.exists(indicatorPath+filename+'/MA'):
-            os.mkdir(indicatorPath+filename+'/MA')
-        with open(indicatorPath+filename+'/MA/'+str(day)+'ma.csv','w') as f:
-            f_csv = csv.writer(f)
-            f_csv.writerows(mergeMA)
 
-        # 写入*rsi.csv文件
-        if not os.path.exists(indicatorPath+filename+'/RSI'):
-            os.mkdir(indicatorPath+filename+'/RSI')
-        with open(indicatorPath+filename+'/RSI/'+ str(day) + 'rsi.csv', 'w') as f:
-            f_csv = csv.writer(f)
-            f_csv.writerows(mergeRSI)
 
