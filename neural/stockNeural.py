@@ -36,30 +36,38 @@ def predict(filename,type,indicator):
     net.add(Activation('sigmoid'))  # 输出层使用sigmoid激活函数
     net.compile(loss='binary_crossentropy', optimizer='adam')  # 编译模型，使用adam方法求解
 
-    if os.path.exists(neuralModelsPath+indicator+'.model'):
-        net.load_weights(netfile)
-    else:
-        net.fit(train[:, 1:29], train[:, 29], nb_epoch=100, batch_size=1)  # 训练模型，循环1000次
-        net.save_weights(netfile)  # 保存模型
+    import time
+    timeformat = '%Y%m%d-%X'
+    now = time.strftime(timeformat, time.localtime())
+    netfile = netfile+now
+
+    # if os.path.exists(neuralModelsPath+indicator+'.model'):
+    #     net.load_weights(netfile)
+    # else:
+    #     net.fit(train[:, 1:29], train[:, 29], nb_epoch=100, batch_size=1)  # 训练模型，循环1000次
+    #     net.save_weights(netfile)  # 保存模型
+
+    net.fit(train[:, 1:29], train[:, 29], nb_epoch=1000, batch_size=1)  # 训练模型，循环1000次
+    net.save_weights(netfile)  # 保存模型
 
     if type == 'binary':
         predict_result = net.predict_classes(test[:, 1:29]).reshape(len(test))  # 预测结果变形
         '''这里要提醒的是，keras用predict给出预测概率，predict_classes才是给出预测类别，而且两者的预测结果都是n x 1维数组，而不是通常的 1 x n'''
 
-        cm_plot(test[:,29], predict_result).show() #显示混淆矩阵可视化结果
-
-        from sklearn.metrics import roc_curve #导入ROC曲线函数
-        import matplotlib.pyplot as plt
-
-        predict_result2 = net.predict(test[:,1:29]).reshape(len(test))
-        fpr, tpr, thresholds = roc_curve(test[:,29], predict_result2, pos_label=1)
-        plt.plot(fpr, tpr, linewidth=2, label = 'ROC of LM') #作出ROC曲线
-        plt.xlabel('False Positive Rate') #坐标轴标签
-        plt.ylabel('True Positive Rate') #坐标轴标签
-        plt.ylim(0,1.05) #边界范围
-        plt.xlim(0,1.05) #边界范围
-        plt.legend(loc=4) #图例
-        plt.show() #显示作图结果
+        # cm_plot(test[:,29], predict_result).show() #显示混淆矩阵可视化结果
+        #
+        # from sklearn.metrics import roc_curve #导入ROC曲线函数
+        # import matplotlib.pyplot as plt
+        #
+        # predict_result2 = net.predict(test[:,1:29]).reshape(len(test))
+        # fpr, tpr, thresholds = roc_curve(test[:,29], predict_result2, pos_label=1)
+        # plt.plot(fpr, tpr, linewidth=2, label = 'ROC of LM') #作出ROC曲线
+        # plt.xlabel('False Positive Rate') #坐标轴标签
+        # plt.ylabel('True Positive Rate') #坐标轴标签
+        # plt.ylim(0,1.05) #边界范围
+        # plt.xlim(0,1.05) #边界范围
+        # plt.legend(loc=4) #图例
+        # plt.show() #显示作图结果
     elif type == 'real':
         predict_result = net.predict(test[:, 1:29]).reshape(len(test))  # 预测结果变形
 

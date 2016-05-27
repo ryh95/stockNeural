@@ -57,6 +57,12 @@ def getProfit(filename,type,indicator):
                 y.append(sum)
 
     print sum
-    plt.plot(x,y)
-    plt.show()
+    list_sum = []
+    list_sum.append(sum)
+    with open('sum.csv', 'a+') as f:
+        f_csv = csv.writer(f)
+        f_csv.writerow(list_sum)
+
+    # plt.plot(x,y)
+    # plt.show()
     csvfile.close()

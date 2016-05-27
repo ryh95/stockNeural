@@ -8,8 +8,9 @@ list_indicator = ['MA','RSI']
 type = 'binary'
 indicator = 'RSI'
 
-indicators.getIndicators(filename, *list_indicator)
-excel.makeExcel(filename, type=type, indicator=indicator)
-stockNeural.predict(filename,type=type,indicator=indicator)
+for i in range(1,11):
+    indicators.getIndicators(filename, *list_indicator)
+    excel.makeExcel(filename, type=type, indicator=indicator)
+    stockNeural.predict(filename,type=type,indicator=indicator)
 
-strategy.getProfit(filename,type=type,indicator=indicator)
+    strategy.getProfit(filename,type=type,indicator=indicator)
