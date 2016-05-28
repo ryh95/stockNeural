@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import talib
 import numpy as np
 
-csvfile = file('../data/originalData/'+'000905_close'+'.csv', 'rb')
+csvfile = file('../data/originalData/'+'50ETF'+'.csv', 'rb')
 reader = csv.reader(csvfile)
 
 close = []
@@ -12,10 +12,11 @@ for line in reader:
 
 date = range(len(close))
 
-macd,macdsignal,x = talib.MACD(np.array(close))
+macd,macdsignal,macdhist = talib.MACD(np.array(close))
 
 plt.plot(date,macd)
 plt.plot(date,macdsignal)
 plt.plot(date,close)
+plt.plot(date,macdhist)
 
 plt.show()
