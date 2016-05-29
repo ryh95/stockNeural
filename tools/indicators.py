@@ -78,7 +78,7 @@ def getAllMacdHist(filename,list_para):
        # 写入*.csv文件
        if not os.path.exists(indicatorPath + filename + '/' + 'MACD'):
            os.mkdir(indicatorPath + filename + '/' + 'MACD')
-       with open(indicatorPath + filename + '/' + 'MACD/'+str(para[0])+str(para[1])+str(para[2]), 'w') as f:
+       with open(indicatorPath + filename + '/' + 'MACD/'+str(para[0])+'-'+str(para[1])+'-'+str(para[2]), 'w') as f:
            f_csv = csv.writer(f)
            f_csv.writerow(list_hist)
 

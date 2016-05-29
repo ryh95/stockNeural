@@ -8,11 +8,12 @@ import pandas as pd
 import xlwt
 import math
 
-def makeExcel(filename,type,indicator):
-    indicatorPath = 'data/indicator/'
-    originalDataPath = 'data/originalData/'
-    neuralInputPath = 'data/neuralInput/'+filename+'/'+type+'/'
+indicatorPath = 'data/indicator/'
+originalDataPath = 'data/originalData/'
 
+
+def makeExcel(filename,type,indicator):
+    neuralInputPath = 'data/neuralInput/' + filename + '/' + type + '/'
     diff = 0
     if indicator == 'MA':
         diff = -1
@@ -84,3 +85,77 @@ def makeExcel(filename,type,indicator):
     if not os.path.exists(neuralInputPath):
         os.mkdir(neuralInputPath)
     wb.save(neuralInputPath + 'input'+indicator+'.xls')
+
+def makeMACDExcel(filename,type):
+    neuralInputPath = 'data/neuralInput/' + filename + '/' + type + '/'
+    wb = xlwt.Workbook()
+    ws = wb.add_sheet('InputSheet')  # 命名sheet的名字
+    # 写入表头行
+    ws.write(0, 0, 'time')
+    list_para = [
+        '5-10-30',
+        '5-34-21',
+        '5-35-5',
+        '5-55-10',
+        '6-10-5',
+        '6-30-3',
+        '6-30-6',
+        '6-30-9',
+        '7-19-9',
+        '8-13-9',
+        '12-26-9'
+    ]
+
+    i=1
+    for para in list_para:
+        ws.write(0,i,para)
+        i+=1
+
+    ws.write(0,i,'result')
+    # 写入日期数据
+    csvfile = file(originalDataPath +filename+'.csv', 'rb')
+    reader = csv.reader(csvfile)
+
+    list_close = []
+    for item in reader:
+        list_close.append(item)
+
+    j=1
+    for item in list_close[55+10-2:]:
+        time = item[0]
+        ws.write(j,0,time)
+        j+=1
+
+    # 写入macdhist数据
+    j=1
+    for para in list_para:
+        csvfile = file(indicatorPath+filename+'/'+'MACD/'+para,'rb')
+        reader = csv.reader(csvfile)
+
+        list_temp = []
+        for item in reader:
+            list_temp = item
+
+        i= 1
+        for item in list_temp[55+10-2:]:
+            ws.write(i,j,item)
+            i+=1
+        j+=1
+
+    # 写入结果
+    results = []
+    for i in range(len(list_close[55+10-2:])):
+        price = list_close[i+(55+10-2)-1][1]
+        price_next = list_close[i+(55+10-2)][1]
+        if float(price_next) > float(price):
+            results.append(1)
+        else:
+            results.append(0)
+
+    i=1
+    for result in results:
+        ws.write(i,j,result)
+        i+=1
+
+
+    wb.save(neuralInputPath + 'input' + 'MACD' + '.xls')

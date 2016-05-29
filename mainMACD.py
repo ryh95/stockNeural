@@ -21,4 +21,5 @@ list_para = [
 ]
 
 
-indicators.getAllMacdHist(filename, list_para)
+# indicators.getAllMacdHist(filename, list_para)
+excel.makeMACDExcel(filename,type)
