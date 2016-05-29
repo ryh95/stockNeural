@@ -13,7 +13,11 @@ def getProfit(filename,type,indicator):
 
     data = pd.read_csv(originalDataPath+filename+'.csv')
     data = data.as_matrix()
-    data = data[400:,:]
+
+    if indicator == 'MACD':
+        data = data[55+10-2:,:]
+    else:
+        data = data[400:,:]
 
     t = 0.8
     test = data[int(len(data) * t):, :]

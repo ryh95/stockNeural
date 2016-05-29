@@ -10,6 +10,6 @@ indicator = 'RSI'
 
 indicators.getIndicators(filename, *list_indicator)
 excel.makeExcel(filename, type=type, indicator=indicator)
-stockNeural.predict(filename,type=type,indicator=indicator)
+stockNeural.predict(filename,type=type,indicator=indicator,input_dim=28)
 
 strategy.getProfit(filename,type=type,indicator=indicator)
