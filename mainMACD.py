@@ -21,7 +21,7 @@ list_para = [
 ]
 input_dim = 11
 
-# indicators.getAllMacdHist(filename, list_para)
-# excel.makeMACDExcel(filename,type)
-# stockNeural.predict(filename,type,'MACD',input_dim)
+indicators.getAllMacdHist(filename, list_para)
+excel.makeMACDExcel(filename,type)
+stockNeural.predict(filename,type,'MACD',input_dim)
 strategy.getProfit(filename,type,'MACD')

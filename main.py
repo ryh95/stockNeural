@@ -5,7 +5,7 @@ from tools import indicators
 
 filename = '50ETF'
 list_indicator = ['MA','RSI']
-type = 'binary'
+type = 'real'
 indicator = 'RSI'
 
 indicators.getIndicators(filename, *list_indicator)
