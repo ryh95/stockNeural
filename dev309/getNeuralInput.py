@@ -63,6 +63,8 @@ def prepareData(code):
 
     df2.loc[:len(df2.index) - 1,'result'] = np.array(getResult(code))
 
+    df2 = df2[:len(df2.index) - 59]
+
     df2.to_excel('input.xlsx',sheet_name='Sheet1')
 
 def getResult(code):
@@ -78,8 +80,6 @@ def getResult(code):
             results.append(1)
     return results
 
-def cutData(code):
-    pass
 
 if __name__ == '__main__':
     prepareData(code)
