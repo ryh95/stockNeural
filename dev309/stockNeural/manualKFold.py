@@ -17,7 +17,7 @@ X = dataset[:,1:310].astype(float)
 X_norm = (X-X.mean())/(X.max()-X.min())
 Y = dataset[:,310]
 # define 10-fold cross validation test harness
-kfold = StratifiedKFold(y=Y, n_folds=10, shuffle=True, random_state=seed)
+kfold = StratifiedKFold(y=Y, n_folds=5, shuffle=True, random_state=seed)
 cvscores = []
 for i, (train, test) in enumerate(kfold):
     # create model
@@ -28,11 +28,11 @@ for i, (train, test) in enumerate(kfold):
     # Compile model
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     # Fit the model
-    model.fit(X_norm[train], Y[train], nb_epoch=10, batch_size=5)
+    model.fit(X_norm[train], Y[train], nb_epoch=150, batch_size=5)
     # save weights
     model.save_weights(str(i)+'.model')
     # predict result
-    predict_result = model.predict_classes(X[test])
+    predict_result = model.predict_classes(X_norm[test])
     predict_result = predict_result.reshape(len(predict_result))
     # write results into files
     csvfile = file('resultPredict'+str(i)+'.csv', 'wb')
@@ -40,7 +40,7 @@ for i, (train, test) in enumerate(kfold):
     writer.writerow(predict_result)
     csvfile.close()
     # evaluate the model
-    scores = model.evaluate(X[test], Y[test])
+    scores = model.evaluate(X_norm[test], Y[test])
     print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
     cvscores.append(scores[1] * 100)
 
